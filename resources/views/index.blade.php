@@ -10,17 +10,14 @@
     <main>
         <h1>List of tasks</h1>
         <!-- tasks -->
-        @if(count($tasks))
-            <div id="task-wrapper">
-                @foreach($tasks as $task)
-                  <h5>{{$task->title}}</h5>
-                @endforeach
-            </div>
-        @else
-            <p>
-                No tasks found
-            </p>
-        @endif
+        <div id="task-wrapper">
+            @forelse ($tasks as $task)
+                <h5>{{$task->title}}</h5>
+            @empty
+                <p>No task found</p>
+            @endforelse
+        </div>
+
     </main>
     @isset($name)
     <h2>Welcome {{$name}}</h2>
