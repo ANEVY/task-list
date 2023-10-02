@@ -6,7 +6,22 @@
     <title></title>
 </head>
 <body>
-    <h1>Hello Blade template</h1>
+
+    <main>
+        <h1>List of tasks</h1>
+        <!-- tasks -->
+        @if(count($tasks))
+            <div id="task-wrapper">
+                @foreach($tasks as $task)
+                  <h5>{{$task->title}}</h5>
+                @endforeach
+            </div>
+        @else
+            <p>
+                No tasks found
+            </p>
+        @endif
+    </main>
     @isset($name)
     <h2>Welcome {{$name}}</h2>
     @endisset
