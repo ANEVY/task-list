@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -66,17 +67,37 @@ $tasks = [
     ),
 ];
 
+Route::get('/',function(){
+
+    return redirect()->route('tasks.index');
+});
 /**
  * inorder to use variables not define in an anonymous function we use the use($tasks) 
  * after the anonymous function parenthesis 
  */
-Route::get('/', function () use($tasks) {
+Route::get('/tasks', function () use($tasks) {
     return view('index',[
         'tasks'=>$tasks
     ]);
 })->name('tasks.index');
 
-Route::get('/{id}',function($id){
+Route::get('/tasks/{id}',function($id) use($tasks){
+    
+    //Get task that matches the id parameter
+    /**
+     * Use the collect method to convert an array to an
+     * object to allow you map,filter and find elements
+     * in the array based on certain conditions
+     */
+     
+    $task = collect($tasks)->firstWhere('id','=',$id);
+    if (!$task) {
+        /**
+         * use the abort function to terminate the code
+         * execution
+         */ 
+        abort(Response::HTTP_NOT_FOUND);
+    }
     return $id;
 })->name('tasks.show');
 
