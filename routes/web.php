@@ -74,17 +74,11 @@ Route::get('/', function () use($tasks) {
     return view('index',[
         'tasks'=>$tasks
     ]);
-});
+})->name('tasks.index');
 
-Route::get('/hello',function () {
-    return 'Hello World';
-})->name('hello');
-Route::get('/greet/{name}',function($name){
-    return 'Welcome '. $name .'!';
-});
-Route::get('/redirect-hello',function(){
-    return redirect()->route('hello');
-});
+Route::get('/{id}',function($id){
+    return $id;
+})->name('tasks.show');
 
 Route::fallback(function(){
     return 'Page not found 404';
